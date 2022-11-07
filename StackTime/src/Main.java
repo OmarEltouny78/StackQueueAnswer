@@ -4,6 +4,22 @@ public class Main {
         String exp2 = "()";
         String expr = "a+b";
         System.out.println((infixToPostfix(expr)));
+        LinkedQueue<Integer> queue=new LinkedQueue<Integer>();
+        LinkedStack<Integer>stack=new LinkedStack<Integer>();
+        queue.enqueue(1);
+        queue.enqueue(2);
+        queue.enqueue(3);
+       while (!queue.isEmpty()){
+            int temp= queue.dequeue();
+            System.out.println(temp);
+            stack.push(temp);
+        }
+        while (!stack.isEmpty()){
+            int temp=stack.pop();
+            System.out.println(temp);
+            queue.enqueue(temp);
+        }
+
     }
 
     public static boolean isMatched(String expression) {
