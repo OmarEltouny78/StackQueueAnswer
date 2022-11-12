@@ -29,14 +29,14 @@ public class ArrayQueue<E>implements Queue<E> {
     @Override
     public E first() {
         if(isEmpty())
-        return null;
+            return null;
         return data[f];
     }
 
     @Override
     public E dequeue() {
         if(isEmpty())
-        return null;
+            return null;
         E answer=data[f];
         data[f]=null;
         f=(f+1)%data.length;

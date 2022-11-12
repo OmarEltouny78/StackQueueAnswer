@@ -1,25 +1,9 @@
 public class Main {
     public static void main(String[] args) {
-        String exp1 = " )(( )){([( )])}";
+        String exp1 = "aabc";
         String exp2 = "()";
         String expr = "a+b";
-        System.out.println((infixToPostfix(expr)));
-        LinkedQueue<Integer> queue=new LinkedQueue<Integer>();
-        LinkedStack<Integer>stack=new LinkedStack<Integer>();
-        queue.enqueue(1);
-        queue.enqueue(2);
-        queue.enqueue(3);
-       while (!queue.isEmpty()){
-            int temp= queue.dequeue();
-            System.out.println(temp);
-            stack.push(temp);
-        }
-        while (!stack.isEmpty()){
-            int temp=stack.pop();
-            System.out.println(temp);
-            queue.enqueue(temp);
-        }
-
+        firstNonRepeating(exp1);
     }
 
     public static boolean isMatched(String expression) {
@@ -67,54 +51,38 @@ public class Main {
         return true;
     }
     //helper for precedence
-    public static int Prec(char ch)
+    public static void firstNonRepeating(String str)
     {
-        switch (ch) {
-            case '+':
-            case '-':
-                return 1;
+        int MAX_CHAR=26;
+        // count array of size 26(assuming
+        // only lower case characters are present)
+        int[] charCount = new int[MAX_CHAR];
 
-            case '*':
-            case '/':
-                return 2;
+        // Queue to store Characters
+        LinkedQueue<Character> q = new LinkedQueue<Character>();
 
-            case '^':
-                return 3;
-        }
-        return -1;
-    }
-    public static String infixToPostfix(String exp){
-        String result="";
-        Stack<Character> stack=new LinkedStack<Character>();
-        for (int i = 0; i < exp.length(); i++) {
-            char c=exp.charAt(i);
-            if(Character.isLetterOrDigit(c)){
-                result+=c;
-            }
-            else if(c=='('){
-                stack.push(c);
-            }
-            else if(c==')'){
-                while (!stack.isEmpty()&&stack.top()!='('){
-                    result+=stack.top();
+        // traverse whole stream
+        for (int i = 0; i < str.length(); i++) {
+            char ch = str.charAt(i);
+
+            // push each character in queue
+            q.enqueue(ch);
+
+            // increment the frequency count
+            charCount[ch - 'a']++;
+
+            // check for the non repeating character
+            while (!q.isEmpty()) {
+                if (charCount[q.first() - 'a'] > 1)
+                    q.dequeue();
+                else {
+                    System.out.print(q.first() + " ");
+                    break;
                 }
-                stack.pop();
             }
-            else {
-                while (!stack.isEmpty()&&Prec(c)<=Prec(stack.top())){
-                    result+=stack.top();
-                    stack.pop();
-                }
-                stack.push(c);
-            }
+            if (q.isEmpty())
+                System.out.print(-1 + " ");
         }
-        while (!stack.isEmpty()) {
-            if (stack.top() == '(')
-                return "Invalid Expression";
-            result += stack.top();
-            stack.pop();
-        }
-        return result;
+        System.out.println();
     }
-
 }

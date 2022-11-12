@@ -29,3 +29,4 @@ public class LinkedQueue<E> implements Queue<E>{
         return list.removeFirst();
     }
 }
+
